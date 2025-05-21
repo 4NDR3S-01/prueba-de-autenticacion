@@ -24,8 +24,8 @@ app.use(cors({
 }));
 // Límite de peticiones para evitar fuerza bruta
 const limitePeticiones = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutos
-  max: 100, // máximo 100 peticiones por IP
+  windowMs: 15 * 1000, // 15 segundos
+  max: 20, // máximo 20 peticiones por IP en 15 segundos
   message: { mensaje: 'Demasiadas peticiones, intenta más tarde.' }
 });
 app.use(limitePeticiones);

@@ -17,8 +17,18 @@ exports.registrarUsuario = async (req, res) => {
       // Mensaje genérico para evitar enumeración de usuarios
       return res.status(400).json({ mensaje: 'No se pudo registrar el usuario.' });
     }
-    // Validación extra para evitar inyección NoSQL
-    if (typeof nombre !== 'string' || typeof correo !== 'string' || /[$.]/.test(nombre) || /[$.]/.test(correo)) {
+    // Validación extra para evitar inyección NoSQL (solo bloquea $ y . al inicio o final, permite . en correos)
+    if (
+      typeof nombre !== 'string' ||
+      typeof correo !== 'string' ||
+      /[$]/.test(nombre) ||
+      nombre.trim().length < 2 ||
+      nombre.trim().length > 50 ||
+      correo.trim().length < 6 ||
+      correo.trim().length > 100 ||
+      /[$]/.test(correo) ||
+      correo.trim().startsWith('.') || correo.trim().endsWith('.')
+    ) {
       return res.status(400).json({ mensaje: 'Datos inválidos detectados.' });
     }
     const contrasenaEncriptada = await bcrypt.hash(contrasena, 12);
@@ -38,13 +48,13 @@ exports.iniciarSesion = async (req, res) => {
   }
   try {
     const { correo, contrasena } = req.body;
-    const usuario = await Usuario.findOne({ correo });
-    // Mensaje genérico para evitar enumeración de usuarios
+    // Normalizar correo para evitar problemas de mayúsculas/minúsculas y espacios
+    const correoNormalizado = typeof correo === 'string' ? correo.trim().toLowerCase() : '';
+    const usuario = await Usuario.findOne({ correo: correoNormalizado });
     if (!usuario) {
       return res.status(400).json({ mensaje: 'Correo o contraseña incorrectos' });
     }
-    // Validación extra para evitar inyección NoSQL
-    if (typeof correo !== 'string' || /[$.]/.test(correo)) {
+    if (typeof correo !== 'string' || /[$]/.test(correo)) {
       return res.status(400).json({ mensaje: 'Correo o contraseña incorrectos' });
     }
     const esValida = await bcrypt.compare(contrasena, usuario.contrasena);
