@@ -1,0 +1,37 @@
+{
+  "name": "backend-autenticacion",
+  "version": "1.0.0",
+  "description": "Backend de autenticación en español con Node.js, Express y MongoDB",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
+  },
+  "keywords": [
+    "autenticacion",
+    "express",
+    "mongodb",
+    "jwt",
+    "bcrypt",
+    "español"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.0.0",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.3.2",
+    "nodemailer": "^6.9.13",
+    "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
