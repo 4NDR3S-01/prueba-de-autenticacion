@@ -47,9 +47,4 @@ router.post('/restablecer-contrasena', [
   body('nuevaContrasena').isLength({ min: 6 }).withMessage('La nueva contraseña debe tener al menos 6 caracteres')
 ], controladorUsuarios.restablecerContrasena);
 
-// Ruta protegida de ejemplo
-router.get('/protegida', autenticar, (req, res) => {
-  res.json({ mensaje: 'Acceso concedido a la ruta protegida', usuario: req.usuario });
-});
-
 module.exports = router;

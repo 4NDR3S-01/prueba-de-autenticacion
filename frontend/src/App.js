@@ -4,6 +4,7 @@ import FormularioRegistro from './componentes/FormularioRegistro';
 import FormularioInicioSesion from './componentes/FormularioInicioSesion';
 import FormularioRecuperarContrasena from './componentes/FormularioRecuperarContrasena';
 import PanelDashboard from './componentes/PanelDashboard';
+import RestablecerContrasena from './componentes/RestablecerContrasena';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/registro" element={<FormularioRegistro />} />
         <Route path="/recuperar-contrasena" element={<FormularioRecuperarContrasena />} />
         <Route path="/dashboard" element={token ? <PanelDashboard usuario={usuario} onCerrarSesion={manejarCerrarSesion} /> : <Navigate to="/" />} />
+        <Route path="/restablecer-contrasena/:token" element={<RestablecerContrasena />} />
       </Routes>
     </Router>
   );

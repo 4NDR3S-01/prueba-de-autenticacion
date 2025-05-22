@@ -7,11 +7,13 @@ const FormularioInicioSesion = ({ onLogin }) => {
   const [contrasena, setContrasena] = useState('');
   const [mensaje, setMensaje] = useState('');
   const [errores, setErrores] = useState([]);
+  const [cargando, setCargando] = useState(false);
 
   const manejarEnvio = async (e) => {
     e.preventDefault();
     setMensaje('');
     setErrores([]);
+    setCargando(true);
     try {
       const respuesta = await axios.post(`${process.env.REACT_APP_API_URL}/api/usuarios/iniciar-sesion`, {
         correo,
@@ -21,6 +23,7 @@ const FormularioInicioSesion = ({ onLogin }) => {
       onLogin(respuesta.data.token, respuesta.data.usuario);
       window.location.href = '/dashboard';
     } catch (error) {
+      setCargando(false);
       if (error.response?.data?.errores) {
         setErrores(error.response.data.errores.map(e => e.msg));
       } else {
@@ -58,7 +61,13 @@ const FormularioInicioSesion = ({ onLogin }) => {
           required
         />
       </div>
-      <button type="submit">Entrar</button>
+      <button type="submit">{cargando ? 'Procesando...' : 'Entrar'}</button>
+      <div className="formulario-links">
+        <span>¿No tienes cuenta?</span>
+        <a href="/registro">Regístrate aquí</a>
+        <span>|</span>
+        <a href="/recuperar-contrasena">¿Olvidaste tu contraseña?</a>
+      </div>
     </form>
   );
 };

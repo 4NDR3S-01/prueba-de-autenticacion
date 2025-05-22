@@ -72,6 +72,10 @@ const FormularioRegistro = () => {
         />
       </div>
       <button type="submit">Registrarse</button>
+      <div style={{textAlign: 'center', marginTop: '1rem'}}>
+        <span>¿Ya tienes cuenta? </span>
+        <a href="/" style={{color: '#0072ff', fontWeight: 600, textDecoration: 'none'}}>Inicia sesión</a>
+      </div>
     </form>
   );
 };
